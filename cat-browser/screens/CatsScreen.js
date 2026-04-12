@@ -1,9 +1,20 @@
+import { useLayoutEffect } from 'react'
 import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, DrawerActions } from '@react-navigation/native'
 import { cats } from '../data/cats'
 
 export default function CatsScreen() {
   const navigation = useNavigation()
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
+          <Text style={{ fontSize: 24, marginLeft: 8 }}>☰</Text>
+        </TouchableOpacity>
+      )
+    })
+  }, [])
 
   return (
     <FlatList

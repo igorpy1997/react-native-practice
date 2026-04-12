@@ -1,13 +1,15 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createDrawerNavigator } from '@react-navigation/drawer'
 import { Ionicons } from '@expo/vector-icons'
 
 import CatsScreen from '../screens/CatsScreen'
 import FavoritesScreen from '../screens/FavoritesScreen'
 import CatDetailScreen from '../screens/CatDetailScreen'
-
+import AboutScreen from '../screens/AboutScreen'
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
+const Drawer = createDrawerNavigator()
 
 function TabGroup() {
   return (
@@ -15,13 +17,11 @@ function TabGroup() {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size, focused }) => {
           let iconName
-
           if (route.name === 'Cats') {
             iconName = focused ? 'paw' : 'paw-outline'
           } else if (route.name === 'Favorites') {
             iconName = focused ? 'heart' : 'heart-outline'
           }
-
           return <Ionicons name={iconName} size={size} color={color} />
         },
         tabBarActiveTintColor: '#ff6b6b',
@@ -33,11 +33,20 @@ function TabGroup() {
   )
 }
 
-export default function Navigation() {
+function HomeStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="TabGroup" component={TabGroup} options={{ headerShown: false }} />
       <Stack.Screen name="CatDetail" component={CatDetailScreen} />
     </Stack.Navigator>
+  )
+}
+
+export default function Navigation() {
+  return (
+    <Drawer.Navigator screenOptions={{ headerShown: false }}>
+      <Drawer.Screen name="Home" component={HomeStack} />
+      <Drawer.Screen name="About" component={AboutScreen} />
+    </Drawer.Navigator>
   )
 }
