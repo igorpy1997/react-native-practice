@@ -1,3 +1,4 @@
+import { ComponentProps } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createDrawerNavigator } from '@react-navigation/drawer'
@@ -7,19 +8,23 @@ import CatsScreen from '../screens/CatsScreen'
 import FavoritesScreen from '../screens/FavoritesScreen'
 import CatDetailScreen from '../screens/CatDetailScreen'
 import AboutScreen from '../screens/AboutScreen'
-const Stack = createNativeStackNavigator()
-const Tab = createBottomTabNavigator()
-const Drawer = createDrawerNavigator()
+import { StackParamList, TabParamList, DrawerParamList } from '../types/navigation'
+
+type IoniconName = ComponentProps<typeof Ionicons>['name']
+
+const Stack = createNativeStackNavigator<StackParamList>()
+const Tab = createBottomTabNavigator<TabParamList>()
+const Drawer = createDrawerNavigator<DrawerParamList>()
 
 function TabGroup() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size, focused }) => {
-          let iconName
+          let iconName: IoniconName
           if (route.name === 'Cats') {
             iconName = focused ? 'paw' : 'paw-outline'
-          } else if (route.name === 'Favorites') {
+          } else {
             iconName = focused ? 'heart' : 'heart-outline'
           }
           return <Ionicons name={iconName} size={size} color={color} />

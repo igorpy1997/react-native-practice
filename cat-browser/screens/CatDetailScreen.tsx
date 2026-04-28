@@ -1,11 +1,16 @@
 import { useLayoutEffect } from 'react'
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { useNavigation, useRoute } from '@react-navigation/native'
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useFavorites } from '../context/FavoritesContext'
+import { StackParamList } from '../types/navigation'
+
+type CatDetailNavProp = NativeStackNavigationProp<StackParamList, 'CatDetail'>
+type CatDetailRouteProp = RouteProp<StackParamList, 'CatDetail'>
 
 export default function CatDetailScreen() {
-  const navigation = useNavigation()
-  const route = useRoute()
+  const navigation = useNavigation<CatDetailNavProp>()
+  const route = useRoute<CatDetailRouteProp>()
   const { cat } = route.params
   const { addFavorite, removeFavorite, isFavorite } = useFavorites()
 
@@ -18,7 +23,7 @@ export default function CatDetailScreen() {
         <TouchableOpacity onPress={() => favorite ? removeFavorite(cat.id) : addFavorite(cat)}>
           <Text style={{ fontSize: 24 }}>{favorite ? '❤️' : '🤍'}</Text>
         </TouchableOpacity>
-      )
+      ),
     })
   }, [favorite])
 

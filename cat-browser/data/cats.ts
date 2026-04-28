@@ -1,4 +1,13 @@
-export const cats = [
+export type Cat = {
+  id: number
+  name: string
+  breed: string
+  age: number
+  description: string
+  image: string
+}
+
+export const cats: Cat[] = [
   { id: 1, name: 'Whiskers', breed: 'Persian', age: 3, description: 'Very fluffy and lazy cat who loves sleeping all day', image: 'https://cataas.com/cat/cute?width=300&height=400&t=1' },
   { id: 2, name: 'Shadow', breed: 'British Shorthair', age: 5, description: 'Serious looking cat but actually very cuddly', image: 'https://cataas.com/cat/funny?width=300&height=400&t=2' },
   { id: 3, name: 'Luna', breed: 'Siamese', age: 2, description: 'Very talkative and energetic, loves to play', image: 'https://cataas.com/cat?width=300&height=400&t=3' },

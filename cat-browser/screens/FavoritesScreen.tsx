@@ -1,25 +1,29 @@
-import { useLayoutEffect } from 'react'
 import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native'
-import { useNavigation, DrawerActions } from '@react-navigation/native'
-import { cats } from '../data/cats'
+import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { useFavorites } from '../context/FavoritesContext'
+import { Cat } from '../data/cats'
+import { StackParamList } from '../types/navigation'
 
-export default function CatsScreen() {
-  const navigation = useNavigation()
+type FavoritesNavProp = NativeStackNavigationProp<StackParamList>
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
-          <Text style={{ fontSize: 24, marginLeft: 8 }}>☰</Text>
-        </TouchableOpacity>
-      )
-    })
-  }, [])
+export default function FavoritesScreen() {
+  const navigation = useNavigation<FavoritesNavProp>()
+  const { favorites } = useFavorites()
+
+  if (favorites.length === 0) {
+    return (
+      <View style={styles.empty}>
+        <Text style={styles.emptyText}>No favorites yet 🤍</Text>
+        <Text style={styles.emptySubtext}>Add some cats!</Text>
+      </View>
+    )
+  }
 
   return (
     <FlatList
-      data={cats}
-      keyExtractor={(item) => item.id.toString()}
+      data={favorites}
+      keyExtractor={(item: Cat) => item.id.toString()}
       renderItem={({ item }) => (
         <TouchableOpacity
           style={styles.card}
@@ -37,6 +41,20 @@ export default function CatsScreen() {
 }
 
 const styles = StyleSheet.create({
+  empty: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  emptyText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  emptySubtext: {
+    fontSize: 16,
+    color: '#666',
+    marginTop: 8,
+  },
   card: {
     flexDirection: 'row',
     margin: 10,
