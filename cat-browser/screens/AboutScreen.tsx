@@ -1,9 +1,13 @@
 import { useLayoutEffect } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { useNavigation, DrawerActions } from '@react-navigation/native'
+import { DrawerNavigationProp } from '@react-navigation/drawer'
+import { DrawerParamList } from '../types/navigation'
+
+type AboutNavProp = DrawerNavigationProp<DrawerParamList, 'About'>
 
 export default function AboutScreen() {
-  const navigation = useNavigation()
+  const navigation = useNavigation<AboutNavProp>()
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -13,7 +17,7 @@ export default function AboutScreen() {
         <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
           <Text style={{ fontSize: 24, marginLeft: 8 }}>☰</Text>
         </TouchableOpacity>
-      )
+      ),
     })
   }, [])
 
