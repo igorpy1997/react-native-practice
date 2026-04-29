@@ -1,6 +1,6 @@
 # 🐱 Cat Browser
 
-A React Native app built with Expo to browse and favorite cats.
+A React Native app built with React native cli to browse and favorite cats.
 
 ## Features
 
